@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 TSRS｜台灣學生傑出研究發表論壇</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+/* ── Reset & Base ────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-fg-primary);
+  background: #fff;
+  line-height: var(--leading-normal);
+}
+
+/* ── Nav ─────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.96);
+  border-bottom: 2px solid var(--blue-100);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: box-shadow 200ms ease-out;
+}
+.nav.scrolled { box-shadow: 0 4px 24px rgba(82,157,214,0.13); }
+.nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 24px;
+  gap: 16px;
+}
+.nav-logos {
+  display: flex; align-items: center; gap: 16px;
+}
+.nav-logos img { height: 36px; width: auto; object-fit: contain; }
+.nav-divider {
+  width: 1px; height: 28px;
+  background: var(--color-border);
+}
+.nav-title {
+  font-size: 14px; font-weight: 700;
+  color: var(--blue-700); letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+.nav-links {
+  display: flex; gap: 4px; align-items: center;
+  list-style: none;
+}
+.nav-links a {
+  display: block; padding: 6px 12px;
+  font-size: 13px; font-weight: 700;
+  color: var(--charcoal-600); letter-spacing: 0.05em;
+  border-radius: 4px;
+  transition: background 150ms, color 150ms;
+  text-decoration: none;
+}
+.nav-links a:hover { background: var(--blue-50); color: var(--blue-600); }
+.nav-cta {
+  background: var(--blue-400); color: #fff !important;
+  border-radius: 4px !important;
+  padding: 7px 16px !important;
+}
+.nav-cta:hover { background: var(--blue-500) !important; }
+
+/* ── Hero ────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  background: var(--blue-800);
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 120px 24px 80px;
+}
+
+/* Geometric background pattern */
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(82,157,214,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(239,186,56,0.08) 0%, transparent 45%),
+    radial-gradient(circle at 60% 10%, rgba(174,32,36,0.07) 0%, transparent 35%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.hero-accent-line {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--gold-400), var(--blue-400), var(--red-400));
+}
+
+/* Hero content */
+.hero-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  max-width: 800px;
+}
+.hero-logos {
+  display: flex; align-items: center; justify-content: center;
+  gap: 32px; margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.hero-logo-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.hero-logo-wrap img {
+  height: 72px; width: auto; object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+.hero-logo-wrap .logo-ntsec { filter: none; }
+.hero-logo-label {
+  font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.12em; text-align: center;
+  line-height: 1.4;
+}
+.hero-logo-x {
+  font-size: 24px; color: rgba(255,255,255,0.3);
+  font-weight: 300; line-height: 1;
+  margin-bottom: 16px;
+}
+
+.hero-eyebrow {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.2em;
+  color: var(--gold-300); text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: ''; display: block;
+  width: 32px; height: 1px; background: var(--gold-400);
+}
+
+.hero-title {
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 900; line-height: 1.1;
+  color: #fff;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+.hero-title-en {
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 400; letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 32px;
+}
+.hero-year {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold-400), var(--gold-300));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-meta {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 12px; margin-bottom: 40px;
+}
+.hero-tag {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px; padding: 8px 16px;
+  font-size: 14px; color: rgba(255,255,255,0.85);
+  font-weight: 700; letter-spacing: 0.04em;
+}
+.hero-tag-icon { font-size: 16px; }
+
+.hero-btns {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 12px;
+}
+.btn-hero-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 4px;
+  background: var(--gold-400); color: var(--charcoal-800);
+  font-family: var(--font-primary); font-size: 15px; font-weight: 900;
+  letter-spacing: 0.06em; border: none; cursor: pointer;
+  transition: background 150ms, transform 150ms, box-shadow 150ms;
+  text-decoration: none;
+}
+.btn-hero-primary:hover {
+  background: var(--gold-300);
+  box-shadow: 0 8px 24px rgba(239,186,56,0.35);
+  text-decoration: none; color: var(--charcoal-800);
+}
+.btn-hero-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 4px;
+  background: transparent; color: rgba(255,255,255,0.85);
+  font-family: var(--font-primary); font-size: 15px; font-weight: 700;
+  letter-spacing: 0.06em;
+  border: 2px solid rgba(255,255,255,0.3); cursor: pointer;
+  transition: border-color 150ms, background 150ms;
+  text-decoration: none;
+}
+.btn-hero-outline:hover {
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.08);
+  text-decoration: none; color: #fff;
+}
+
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.35); font-size: 11px; letter-spacing: 0.15em;
+  z-index: 2;
+}
+.scroll-arrow {
+  width: 20px; height: 20px;
+  border-right: 2px solid rgba(255,255,255,0.3);
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  transform: rotate(45deg);
+  animation: bounce 1.8s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(5px); }
+}
+
+/* ── Section Base ─────────────────────────────────── */
+.section {
+  padding: 96px 24px;
+}
+.section-inner {
+  max-width: 1200px; margin: 0 auto;
+}
+.section-header {
+  text-align: center; margin-bottom: 56px;
+}
+.section-eyebrow {
+  display: inline-block;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--blue-500);
+  margin-bottom: 12px;
+  padding: 4px 14px; background: var(--blue-50);
+  border-radius: 100px; border: 1px solid var(--blue-100);
+}
+.section-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 900; color: var(--charcoal-700);
+  letter-spacing: 0.04em; line-height: 1.2;
+  margin-bottom: 12px;
+}
+.section-desc {
+  font-size: 16px; color: var(--charcoal-400);
+  max-width: 600px; margin: 0 auto; line-height: 1.8;
+}
+
+/* ── About ───────────────────────────────────────── */
+.about { background: var(--neutral-50); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: center;
+}
+.about-text h3 {
+  font-size: 28px; font-weight: 900;
+  color: var(--charcoal-700); line-height: 1.4;
+  margin-bottom: 20px; letter-spacing: 0.03em;
+}
+.about-text p {
+  color: var(--charcoal-500); line-height: 1.9;
+  font-size: 15px; margin-bottom: 16px;
+}
+.about-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.stat-card {
+  background: #fff; border: 1px solid var(--color-border);
+  border-radius: 8px; padding: 24px;
+  box-shadow: var(--shadow-1);
+  text-align: center;
+  transition: box-shadow 200ms;
+}
+.stat-card:hover { box-shadow: var(--shadow-2); }
+.stat-num {
+  font-size: 42px; font-weight: 900;
+  line-height: 1; margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.stat-num.blue { color: var(--blue-400); }
+.stat-num.gold { color: var(--gold-500); }
+.stat-num.red  { color: var(--red-500); }
+.stat-num.teal { color: var(--teal-400); }
+.stat-label {
+  font-size: 13px; font-weight: 700;
+  color: var(--charcoal-400); letter-spacing: 0.05em;
+}
+
+/* ── Highlights ──────────────────────────────────── */
+.highlights { background: #fff; }
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.highlight-card {
+  background: #fff; border: 1px solid var(--color-border);
+  border-radius: 8px; padding: 32px 28px;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow 200ms, transform 200ms;
+  position: relative; overflow: hidden;
+}
+.highlight-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.highlight-card.c-blue::before  { background: var(--blue-400); }
+.highlight-card.c-gold::before  { background: var(--gold-400); }
+.highlight-card.c-red::before   { background: var(--red-500); }
+.highlight-card.c-teal::before  { background: var(--teal-400); }
+.highlight-card.c-salmon::before { background: var(--salmon-400); }
+.highlight-card.c-charcoal::before { background: var(--charcoal-500); }
+.highlight-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-3px);
+}
+.highlight-icon {
+  width: 52px; height: 52px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin-bottom: 20px;
+}
+.c-blue  .highlight-icon { background: var(--blue-50);   }
+.c-gold  .highlight-icon { background: var(--gold-50);   }
+.c-red   .highlight-icon { background: var(--red-50);    }
+.c-teal  .highlight-icon { background: var(--teal-50);   }
+.c-salmon .highlight-icon { background: var(--salmon-50); }
+.c-charcoal .highlight-icon { background: var(--neutral-100); }
+.highlight-card h4 {
+  font-size: 18px; font-weight: 900;
+  color: var(--charcoal-700); margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+.highlight-card p {
+  font-size: 14px; color: var(--charcoal-400);
+  line-height: 1.8;
+}
+
+/* ── Schedule ────────────────────────────────────── */
+.schedule { background: var(--blue-800); }
+.schedule .section-eyebrow { background: rgba(255,255,255,0.1); color: var(--gold-300); border-color: rgba(255,255,255,0.15); }
+.schedule .section-title { color: #fff; }
+.schedule .section-desc { color: rgba(255,255,255,0.6); }
+
+.schedule-tabs {
+  display: flex; justify-content: center; gap: 8px;
+  margin-bottom: 40px; flex-wrap: wrap;
+}
+.sched-tab {
+  padding: 10px 24px; border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.65); font-size: 14px; font-weight: 700;
+  font-family: var(--font-primary); cursor: pointer;
+  transition: background 150ms, color 150ms, border-color 150ms;
+}
+.sched-tab.active {
+  background: var(--gold-400); color: var(--charcoal-800);
+  border-color: var(--gold-400);
+}
+.sched-tab:hover:not(.active) {
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.9);
+}
+
+.schedule-panel { display: none; }
+.schedule-panel.active { display: block; }
+
+.sched-timeline {
+  max-width: 720px; margin: 0 auto;
+  position: relative;
+}
+.sched-timeline::before {
+  content: ''; position: absolute;
+  left: 100px; top: 0; bottom: 0; width: 2px;
+  background: rgba(255,255,255,0.1);
+}
+.sched-item {
+  display: grid; grid-template-columns: 88px 1fr;
+  gap: 24px; margin-bottom: 8px;
+  position: relative;
+}
+.sched-time {
+  text-align: right; padding-top: 14px;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--gold-300);
+}
+.sched-body {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px; padding: 14px 20px;
+  position: relative;
+}
+.sched-body::before {
+  content: ''; position: absolute;
+  left: -8px; top: 18px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold-400);
+  box-shadow: 0 0 0 3px rgba(239,186,56,0.2);
+}
+.sched-body h5 {
+  font-size: 15px; font-weight: 900;
+  color: #fff; margin-bottom: 4px; letter-spacing: 0.02em;
+}
+.sched-body p {
+  font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6;
+}
+.sched-highlight { background: rgba(239,186,56,0.1) !important; border-color: rgba(239,186,56,0.25) !important; }
+.sched-highlight h5 { color: var(--gold-300); }
+
+/* ── Speakers ────────────────────────────────────── */
+.speakers { background: var(--neutral-50); }
+.speakers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.speaker-card {
+  background: #fff; border: 1px solid var(--color-border);
+  border-radius: 8px; padding: 28px 20px;
+  box-shadow: var(--shadow-1); text-align: center;
+  transition: box-shadow 200ms, transform 200ms;
+}
+.speaker-card:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.speaker-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--blue-100);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 28px; font-weight: 900; color: var(--blue-600);
+  letter-spacing: 0;
+}
+.speaker-name {
+  font-size: 16px; font-weight: 900; color: var(--charcoal-700);
+  margin-bottom: 4px; letter-spacing: 0.03em;
+}
+.speaker-title {
+  font-size: 12px; color: var(--charcoal-400); line-height: 1.6;
+  margin-bottom: 10px;
+}
+.speaker-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px;
+}
+
+/* ── Venue ───────────────────────────────────────── */
+.venue { background: #fff; }
+.venue-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; align-items: start;
+}
+.venue-info h3 {
+  font-size: 26px; font-weight: 900;
+  color: var(--charcoal-700); margin-bottom: 20px;
+}
+.venue-detail {
+  display: flex; gap: 12px; margin-bottom: 16px;
+  align-items: flex-start;
+}
+.venue-detail-icon {
+  width: 36px; height: 36px; min-width: 36px;
+  background: var(--blue-50); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+}
+.venue-detail-text strong {
+  display: block; font-size: 13px; font-weight: 700;
+  color: var(--charcoal-500); letter-spacing: 0.06em;
+  text-transform: uppercase; margin-bottom: 2px;
+}
+.venue-detail-text span {
+  font-size: 15px; color: var(--charcoal-700); line-height: 1.6;
+}
+.venue-map-wrap {
+  border-radius: 8px; overflow: hidden;
+  box-shadow: var(--shadow-2);
+  border: 1px solid var(--color-border);
+}
+.venue-map-wrap img {
+  width: 100%; height: auto; display: block;
+}
+.venue-map-caption {
+  background: var(--neutral-50); padding: 12px 16px;
+  font-size: 12px; color: var(--charcoal-400); letter-spacing: 0.04em;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── CTA ─────────────────────────────────────────── */
+.cta-section {
+  background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-900) 100%);
+  padding: 96px 24px; text-align: center; position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 30% 50%, rgba(82,157,214,0.25) 0%, transparent 50%),
+    radial-gradient(circle at 70% 50%, rgba(239,186,56,0.08) 0%, transparent 45%);
+}
+.cta-inner { position: relative; z-index: 2; }
+.cta-section h2 {
+  font-size: clamp(28px, 4vw, 44px); font-weight: 900;
+  color: #fff; margin-bottom: 12px; letter-spacing: 0.04em;
+}
+.cta-section p {
+  font-size: 16px; color: rgba(255,255,255,0.65);
+  margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto;
+}
+.cta-deadline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(239,186,56,0.12);
+  border: 1px solid rgba(239,186,56,0.3);
+  border-radius: 4px; padding: 8px 18px;
+  font-size: 14px; font-weight: 700; color: var(--gold-300);
+  margin-bottom: 28px; letter-spacing: 0.04em;
+}
+
+/* ── Footer ──────────────────────────────────────── */
+footer {
+  background: var(--charcoal-700);
+  padding: 48px 24px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto; gap: 48px;
+  align-items: start;
+}
+.footer-logos {
+  display: flex; align-items: center; gap: 24px; margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.footer-logos img {
+  height: 40px; width: auto; object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+.footer-logos .logo-ntsec-footer { filter: brightness(0) invert(1); }
+.footer-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.2); }
+.footer-desc {
+  font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.8;
+  max-width: 480px;
+}
+.footer-links { text-align: right; }
+.footer-links h5 {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 12px;
+}
+.footer-links a {
+  display: block; font-size: 13px; color: rgba(255,255,255,0.55);
+  margin-bottom: 6px; text-decoration: none;
+  transition: color 150ms;
+}
+.footer-links a:hover { color: #fff; }
+.footer-copy {
+  max-width: 1200px; margin: 32px auto 0;
+  padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px; color: rgba(255,255,255,0.25);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 900px) {
+  .about-grid, .venue-grid { grid-template-columns: 1fr; }
+  .highlights-grid { grid-template-columns: 1fr 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-links { text-align: left; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .highlights-grid { grid-template-columns: 1fr; }
+  .about-stats { grid-template-columns: 1fr 1fr; }
+  .hero-logo-wrap img { height: 52px; }
+}
+
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(204,0,0,0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(204,0,0,0); }
+}
+@keyframes dot {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.3; }
+}
+.fade-in {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Tweaks Panel ────────────────────────────────── */
+#tweaks-panel {
+  display: none;
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: #fff; border-radius: 8px;
+  box-shadow: 0 16px 48px rgba(62,58,57,0.2);
+  border: 1px solid var(--color-border);
+  width: 260px; overflow: hidden;
+}
+#tweaks-panel.open { display: block; }
+.tweaks-header {
+  background: var(--blue-800); padding: 14px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.tweaks-header h6 {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7); text-transform: uppercase;
+}
+.tweaks-close {
+  background: none; border: none; cursor: pointer;
+  color: rgba(255,255,255,0.5); font-size: 18px; line-height: 1;
+}
+.tweaks-body { padding: 16px; }
+.tweak-row { margin-bottom: 16px; }
+.tweak-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--charcoal-400); text-transform: uppercase;
+  margin-bottom: 8px; display: block;
+}
+.tweak-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.tweak-opt {
+  padding: 5px 12px; border-radius: 4px; font-size: 12px; font-weight: 700;
+  font-family: var(--font-primary); cursor: pointer;
+  border: 1px solid var(--color-border);
+  background: var(--neutral-50); color: var(--charcoal-600);
+  transition: background 150ms, border-color 150ms;
+}
+.tweak-opt.active { background: var(--blue-50); border-color: var(--blue-300); color: var(--blue-700); }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <div class="nav-logos">
+      <img src="uploads/科教館LOGO.png" alt="國立臺灣科學教育館" style="height:32px;">
+      <div class="nav-divider"></div>
+      <img src="uploads/央團LOGO.png" alt="教育部特資優類央團" style="height:32px;">
+      <div class="nav-title">2026 TSRS</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">關於論壇</a></li>
+      <li><a href="#highlights">論壇亮點</a></li>
+      <li><a href="#schedule">活動時程</a></li>
+      <li><a href="#speakers">與會專家</a></li>
+      <li><a href="#teams">展演團隊</a></li>
+      <li><a href="#venue">場地資訊</a></li>
+      <li><a href="#register" class="nav-cta">立即報名</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-accent-line"></div>
+
+  <div class="hero-content">
+    <div class="hero-logos">
+      <div class="hero-logo-wrap">
+        <img src="uploads/科教館LOGO.png" alt="NTSEC" class="logo-ntsec" style="filter:brightness(0) invert(1); height:64px;">
+        <span class="hero-logo-label">國立臺灣<br>科學教育館</span>
+      </div>
+      <div class="hero-logo-x">×</div>
+      <div class="hero-logo-wrap">
+        <img src="uploads/央團LOGO.png" alt="教育部特資優類央團" style="filter:brightness(0) invert(1); height:64px;">
+        <span class="hero-logo-label">教育部特殊教育<br>資優類中央輔導團</span>
+      </div>
+    </div>
+
+    <p class="hero-eyebrow">Taiwan Student Research Symposium</p>
+
+    <h1 class="hero-title">
+      <span class="hero-year">2026</span><br>
+      台灣學生傑出研究發表<br>暨專家指導交流論壇
+    </h1>
+    <p class="hero-title-en">TSRS 2026</p>
+
+    <div class="hero-meta">
+      <div class="hero-tag"><span class="hero-tag-icon">📅</span> 2026年5月30日（星期六）</div>
+      <div class="hero-tag"><span class="hero-tag-icon">📍</span> 國立臺灣科學教育館 B1</div>
+      <div class="hero-tag"><span class="hero-tag-icon">🎓</span> 高中職及大學生適用</div>
+    </div>
+
+    <div class="hero-btns">
+      <a href="#register" class="btn-hero-primary">立即報名 →</a>
+      <a href="#about" class="btn-hero-outline">了解更多</a>
+      <a href="#" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:4px;background:#cc0000;color:#fff;font-family:var(--font-primary);font-size:15px;font-weight:900;letter-spacing:0.06em;text-decoration:none;box-shadow:0 0 0 0 rgba(204,0,0,0.4);animation:livePulse 1.8s ease-in-out infinite;">
+        <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#fff;opacity:0.9;animation:dot 1.2s ease-in-out infinite;"></span>
+        LIVE 線上直播
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <h3>給學生研究者<br>一個被看見的舞台</h3>
+        <p>「台灣學生傑出研究發表論壇」（TSRS）是由教育部特殊教育資優類中央輔導團與國立臺灣科學教育館共同主辦的年度盛事，提供台灣年度頂尖學生科展的傑出研究團隊一個發表研究成果、交流知識、向頂尖專家學習的高規格平台。</p>
+        <p>2026年的 TSRS 延續往年精神，廣邀各領域傑出學生研究者，以海報展示與口頭發表形式，在科教館寬闊的場域中展現台灣學生的研究能量與創意視野。</p>
+        <div style="margin-top:24px;">
+          <a href="#register" class="btn btn-primary" style="font-family:var(--font-primary);font-size:14px;font-weight:900;padding:12px 28px;border-radius:4px;background:var(--blue-400);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">報名參加 →</a>
+        </div>
+      </div>
+      <div class="about-stats fade-in">
+        <div class="stat-card">
+          <div class="stat-num blue">10</div>
+          <div class="stat-label">參展研究件數</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num gold">7<span style="font-size:24px;">+</span></div>
+          <div class="stat-label">與會專家學者</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num teal">150<span style="font-size:24px;">+</span></div>
+          <div class="stat-label">預計與會人次</div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:13px;font-weight:900;color:var(--red-500);line-height:1.4;margin-bottom:6px;">教育部資優央團<br>× 台灣科教館</div>
+          <div class="stat-label">聯手主辦</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Highlights -->
+<section class="section highlights" id="highlights">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <p class="section-eyebrow">Forum Highlights</p>
+      <h2 class="section-title">論壇六大亮點</h2>
+      <p class="section-desc">集研究發表、專家指導、跨域交流於一身，給學生最有深度的學術體驗</p>
+    </div>
+    <div class="highlights-grid">
+      <div class="highlight-card c-blue fade-in">
+        <div class="highlight-icon">🔬</div>
+        <h4>海報研究展示</h4>
+        <p>以科學海報形式呈現研究成果，接受現場觀眾與評審提問，訓練學術溝通能力。</p>
+      </div>
+      <div class="highlight-card c-gold fade-in">
+        <div class="highlight-icon">🎙️</div>
+        <h4>口頭發表展演</h4>
+        <p>精選優秀研究者進行口頭報告，在專家評審面前展現研究深度與簡報表達能力。</p>
+      </div>
+      <div class="highlight-card c-teal fade-in">
+        <div class="highlight-icon">👩‍🏫</div>
+        <h4>專家一對一評講</h4>
+        <p>各領域頂尖學者親臨現場，針對每組研究給予專業建議與深度學術指導。</p>
+      </div>
+      <div class="highlight-card c-red fade-in">
+        <div class="highlight-icon">📡</div>
+        <h4>網路同步直播</h4>
+        <p>透過網路直播，讓優秀學子被看見，給予學生肯定與激勵，也讓研究路上的學生見賢思齊。</p>
+        <div style="margin-top:16px;">
+          <a href="#" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:4px;background:#cc0000;color:#fff;font-family:var(--font-primary);font-size:13px;font-weight:900;letter-spacing:0.06em;text-decoration:none;animation:livePulse 1.8s ease-in-out infinite;">
+            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#fff;animation:dot 1.2s ease-in-out infinite;"></span>
+            LIVE 前往直播
+          </a>
+        </div>
+      </div>
+      <div class="highlight-card c-salmon fade-in">
+        <div class="highlight-icon">🌐</div>
+        <h4>跨域交流互動</h4>
+        <p>匯聚自然科學、社會人文、工程技術等多元領域，促進跨科際知識的碰撞激盪。</p>
+      </div>
+      <div class="highlight-card c-charcoal fade-in">
+        <div class="highlight-icon">🏛️</div>
+        <h4>科教館場域資源</h4>
+        <p>在國立臺灣科學教育館舉辦，參與者可享有豐富的科學展示與互動設施資源。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Schedule -->
+<section class="section schedule" id="schedule">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <p class="section-eyebrow">Program</p>
+      <h2 class="section-title">活動時程</h2>
+      <p class="section-desc">完整的兩日論壇流程，兼顧研究發表與學術交流</p>
+    </div>
+
+    <p style="text-align:center;font-size:14px;font-weight:700;color:var(--gold-300);letter-spacing:0.1em;margin-bottom:32px;">2026 年 5 月 30 日（星期六）｜國立臺灣科學教育館</p>
+
+    <div class="sched-venue-legend" style="display:flex;justify-content:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
+      <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.55);letter-spacing:0.06em;">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--blue-400);"></span>A 會場（數理應用）
+      </span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.55);letter-spacing:0.06em;">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--teal-400);"></span>B 會場（生化環科）
+      </span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.55);letter-spacing:0.06em;">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--gold-400);"></span>全體
+      </span>
+    </div>
+
+    <div class="sched-timeline" style="max-width:760px;margin:0 auto;position:relative;">
+      <div style="position:absolute;left:100px;top:0;bottom:0;width:2px;background:rgba(255,255,255,0.1);"></div>
+
+      <div class="sched-item"><div class="sched-time">09:30</div><div class="sched-body"><h5>報到</h5><p>B1 電梯口｜領取資料、識別證</p></div></div>
+      <div class="sched-item"><div class="sched-time">10:00</div><div class="sched-body sched-highlight"><h5>開幕典禮</h5><p>A 會場｜主辦單位致詞、大合照</p></div></div>
+      <div class="sched-item"><div class="sched-time">10:20</div><div class="sched-body sched-highlight"><h5>大師專題演講</h5><p>A 會場｜邀請 ISEF 培訓總召或知名科學家，談科學研究趨勢</p></div></div>
+      <div class="sched-item">
+        <div class="sched-time">10:50</div>
+        <div class="sched-body" style="background:rgba(82,157,214,0.12);border-color:rgba(82,157,214,0.25);">
+          <h5 style="color:var(--blue-200);">研究發表 Session 1（分組並行）</h5>
+          <p>每場 3 隊，每隊發表＋講評約 25 分鐘<br>
+          <span style="color:rgba(255,255,255,0.6);">A 會場：數理應用　／　B 會場：生化環科</span></p>
+        </div>
+      </div>
+      <div class="sched-item"><div class="sched-time">12:10</div><div class="sched-body"><h5>午餐 ／ 交流時間</h5><p>團膳區｜自由交流</p></div></div>
+      <div class="sched-item">
+        <div class="sched-time">13:10</div>
+        <div class="sched-body" style="background:rgba(82,157,214,0.12);border-color:rgba(82,157,214,0.25);">
+          <h5 style="color:var(--blue-200);">研究發表 Session 2（分組並行）</h5>
+          <p>延續上午分組模式<br>
+          <span style="color:rgba(255,255,255,0.6);">A 會場：數理應用　／　B 會場：生化環科</span></p>
+        </div>
+      </div>
+      <div class="sched-item"><div class="sched-time">14:30</div><div class="sched-body"><h5>茶敘暨海報交流</h5><p>團膳區 ／ 廊道｜茶敘後與展演團隊交流，展示 A3 研究海報，教師與學生自由互動</p></div></div>
+      <div class="sched-item"><div class="sched-time">15:30</div><div class="sched-body sched-highlight"><h5>指導教師圓桌論壇</h5><p>A 會場｜主題：從選題到國際舞台──研究指導的關鍵<br>與談人：ISEF 指導教師代表、評審教授代表共 4–6 位</p></div></div>
+      <div class="sched-item"><div class="sched-time">16:30</div><div class="sched-body sched-highlight"><h5>綜合座談與閉幕</h5><p>A 會場｜頒發感謝狀、閉幕</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Speakers -->
+<section class="section speakers" id="speakers">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <p class="section-eyebrow">Expert Reviewers</p>
+      <h2 class="section-title">與會專家學者</h2>
+      <p class="section-desc">邀請各學術領域頂尖專家擔任評審，給予學生最專業的研究指導</p>
+    </div>
+    <div class="speakers-grid">
+      <div class="speaker-card fade-in">
+        <div class="speaker-avatar">游</div>
+        <div class="speaker-name">游森棚 教授</div>
+        <div class="speaker-title">國立臺灣師範大學<br>數學系</div>
+        <span class="speaker-tag badge badge-blue">數理應用組</span>
+      </div>
+      <div class="speaker-card fade-in">
+        <div class="speaker-avatar">徐</div>
+        <div class="speaker-name">徐祥峻 副教授</div>
+        <div class="speaker-title">淡江大學<br>應用數學與數據科學學系</div>
+        <span class="speaker-tag badge badge-blue">數理應用組</span>
+      </div>
+      <div class="speaker-card fade-in">
+        <div class="speaker-avatar" style="background:var(--teal-50);color:var(--teal-600);">尤</div>
+        <div class="speaker-name">尤嘯華 副所長</div>
+        <div class="speaker-title">中央研究院<br>化學研究所</div>
+        <span class="speaker-tag badge badge-teal">生化環科組</span>
+      </div>
+      <div class="speaker-card fade-in">
+        <div class="speaker-avatar" style="background:var(--teal-50);color:var(--teal-600);">黃</div>
+        <div class="speaker-name">黃聖言 副研究員</div>
+        <div class="speaker-title">中央研究院<br>生物醫學科學研究所</div>
+        <span class="speaker-tag badge badge-teal">生化環科組</span>
+      </div>
+      <div class="speaker-card fade-in">
+        <div class="speaker-avatar" style="background:var(--teal-50);color:var(--teal-600);">郭</div>
+        <div class="speaker-name">郭文瑞 教授</div>
+        <div class="speaker-title">國立陽明交通大學<br>神經科學研究所</div>
+        <span class="speaker-tag badge badge-teal">生化環科組</span>
+      </div>
+      <div class="speaker-card fade-in">
+        <div class="speaker-avatar" style="background:var(--teal-50);color:var(--teal-600);">劉</div>
+        <div class="speaker-name">劉雅瑄 教授</div>
+        <div class="speaker-title">國立臺灣大學<br>地質科學系</div>
+        <span class="speaker-tag badge badge-teal">生化環科組</span>
+      </div>
+      <div class="speaker-card fade-in">
+        <div class="speaker-avatar" style="background:var(--blue-50);color:var(--blue-600);">林</div>
+        <div class="speaker-name">林晃巖 教授</div>
+        <div class="speaker-title">國立臺灣大學<br>電機工程學系</div>
+        <span class="speaker-tag badge badge-blue">數理應用組</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teams -->
+<section class="section" id="teams" style="background:#fff;">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <p class="section-eyebrow">Presenting Teams</p>
+      <h2 class="section-title">展演團隊</h2>
+      <p class="section-desc">來自全國各校、代表台灣學生研究能量的傑出作品</p>
+    </div>
+
+    <!-- 數理應用組 -->
+    <div style="margin-bottom:48px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <span style="display:inline-block;width:4px;height:28px;background:var(--blue-400);border-radius:2px;"></span>
+        <h3 style="font-size:20px;font-weight:900;color:var(--charcoal-700);letter-spacing:0.04em;">數理應用組</h3>
+        <span class="badge badge-blue" style="font-size:11px;">A 會場</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+            <span class="badge badge-blue">數學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">廣義焦點與完全四線形等共軛軌跡之探討</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">盧品均　臺北市立建國高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：姚志鴻</p>
+          <div style="margin-top:8px;">
+            <span class="badge badge-gold" style="font-size:10px;">奇鋐科學獎</span>
+          </div>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <span class="badge badge-blue">數學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--charcoal-400);background:var(--neutral-100);padding:3px 10px;border-radius:100px;">大會獎 二等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">A Study on Directed Graph Structures Induced by the Josephus Transformation</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">林嘉穎　臺北市立第一女子高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：楊宗穎、鄭永明</p>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+            <span class="badge badge-blue">行為與社會科學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">探討閱讀時沉浸狀態與小說喜好的關聯及其神經機制</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">馬順恩　臺北市立第一女子高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：郭文瑞、陳怡安</p>
+          <div style="margin-top:8px;">
+            <span class="badge badge-salmon" style="font-size:10px;">美國心理學會獎</span>
+          </div>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+            <span class="badge badge-blue">電腦科學與資訊工程</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">A Multimodal AI System for Aphasia Patients Enabling Fluent Expression Featuring Simulated Data Generation</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">林炫宇、莊家瑋　國立花蓮高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：趙義雄</p>
+          <div style="margin-top:8px;">
+            <span class="badge badge-gold" style="font-size:10px;">奇鋐科學獎</span>
+          </div>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+            <span class="badge badge-blue">工程科 A 組</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">Multimodal Spatial Awareness Assist Device for Patients with Single-Sided Deafness</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">陳邦豪　臺北市立建國高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：劉怡君</p>
+          <div style="margin-top:8px;">
+            <span class="badge badge-gold" style="font-size:10px;">奇鋐科學獎</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 生化環科組 -->
+    <div style="margin-bottom:48px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+        <span style="display:inline-block;width:4px;height:28px;background:var(--teal-400);border-radius:2px;"></span>
+        <h3 style="font-size:20px;font-weight:900;color:var(--charcoal-700);letter-spacing:0.04em;">生化環科組</h3>
+        <span class="badge badge-teal" style="font-size:11px;">B 會場</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;">
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <span class="badge badge-teal">化學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">合成活化免疫受體之雙機轉佐劑化合物</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">李孟璇　臺北市立第一女子高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：莊宇樸、許名智</p>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+            <span class="badge badge-teal">動物學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">探討黑腹果蠅基因 Scny 對其卵巢發育以及組蛋白調控之影響</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">施冠宇　國立臺灣師範大學附屬高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：李敏嘉、林峻緯</p>
+          <div style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap;">
+            <span class="badge badge-gold" style="font-size:10px;">奇鋐科學獎</span>
+            <span class="badge badge-gold" style="font-size:10px;">青少年科學獎</span>
+          </div>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <span class="badge badge-teal">生物化學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">脂滴自噬受體的鑑定與功能解析</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">林爾妍、皮羽晴　臺北市立第一女子高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：李家瑋、陳怡安</p>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+            <span class="badge badge-teal">物理與天文學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">椰纖絲奈米碳複合材料的溫度控制熱電相轉變及熱電應用</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">黃楚涵　臺北市立私立復興實驗高級中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：馬瑪宣</p>
+          <div style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap;">
+            <span class="badge badge-gold" style="font-size:10px;">奇鋐科學獎</span>
+            <span class="badge badge-gold" style="font-size:10px;">青少年科學獎</span>
+          </div>
+        </div>
+
+        <div class="card fade-in" style="padding:20px 24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <span class="badge badge-teal">地球與環境科學</span>
+            <span style="font-size:11px;font-weight:700;color:var(--gold-600);background:var(--gold-50);padding:3px 10px;border-radius:100px;">大會獎 一等獎</span>
+          </div>
+          <p style="font-size:15px;font-weight:900;color:var(--charcoal-700);line-height:1.5;margin-bottom:8px;">北極伊斯峽灣地區河口水體自然對流現象之實驗探討</p>
+          <p style="font-size:13px;color:var(--charcoal-400);">盧羿涵、楊宜臻、葉于裴　臺北市立龍門國民中學</p>
+          <p style="font-size:12px;color:var(--charcoal-300);margin-top:4px;">指導教師：陳英杰</p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Venue -->
+<section class="section venue" id="venue">
+  <div class="section-inner">
+    <div class="section-header fade-in">
+      <p class="section-eyebrow">Venue</p>
+      <h2 class="section-title">活動場地</h2>
+    </div>
+    <div class="venue-grid">
+      <div class="venue-info fade-in">
+        <h3>國立臺灣科學教育館<br>B1 多功能教室M01</h3>
+        <div class="venue-detail">
+          <div class="venue-detail-icon">📍</div>
+          <div class="venue-detail-text">
+            <strong>地址</strong>
+            <span>台北市士林區士商路189號</span>
+          </div>
+        </div>
+        <div class="venue-detail">
+          <div class="venue-detail-icon">🚇</div>
+          <div class="venue-detail-text">
+            <strong>交通</strong>
+            <span>捷運劍潭站（紅線）出站步行約10分鐘；或搭乘公車至科教館站</span>
+          </div>
+        </div>
+        <div class="venue-detail">
+          <div class="venue-detail-icon">🅿️</div>
+          <div class="venue-detail-text">
+            <strong>停車</strong>
+            <span>館內設有地下停車場，建議搭乘大眾運輸前往</span>
+          </div>
+        </div>
+        <div class="venue-detail">
+          <div class="venue-detail-icon">🏛️</div>
+          <div class="venue-detail-text">
+            <strong>場地</strong>
+            <span>11樓多功能展覽廳，設有科學教室（M01–M06）、多功能教室及小黑盒等空間</span>
+          </div>
+        </div>
+        <div style="margin-top:24px;">
+          <a href="https://www.ntsec.gov.tw" target="_blank" class="btn btn-outline" style="font-family:var(--font-primary);font-size:13px;font-weight:700;padding:10px 20px;border-radius:4px;border:2px solid var(--blue-400);color:var(--blue-600);background:transparent;display:inline-flex;align-items:center;gap:6px;text-decoration:none;">前往科教館官網 →</a>
+        </div>
+      </div>
+      <div class="venue-map-wrap fade-in">
+        <img src="uploads/B1_map_2022_11F.jpg" alt="科教館11樓場地平面圖">
+        <div class="venue-map-caption">▲ 國立臺灣科學教育館 11樓 場地平面配置圖</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="register">
+  <div class="cta-inner">
+    <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;color:var(--gold-300);text-transform:uppercase;margin-bottom:16px;">Registration</p>
+    <h2>立即報名參加<br>2026 TSRS</h2>
+    <p>名額有限，歡迎積極參與研究的學生踴躍報名，展現你的研究成果！</p>
+    <div class="cta-deadline">⏰ 活動日期：2026年5月30日（星期六）</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="#" class="btn-hero-primary">線上報名系統 →</a>
+      <a href="#" class="btn-hero-outline" style="color:rgba(255,255,255,0.8);border:2px solid rgba(255,255,255,0.3);">下載報名簡章</a>
+    </div>
+    <p style="margin-top:28px;font-size:12px;color:rgba(255,255,255,0.35);">如有任何問題，歡迎聯絡主辦單位</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logos">
+        <img src="uploads/科教館LOGO.png" alt="NTSEC" class="logo-ntsec-footer">
+        <div class="footer-divider"></div>
+        <img src="uploads/央團LOGO.png" alt="教育部特資優類央團">
+      </div>
+      <p class="footer-desc">
+        2026 台灣學生傑出研究發表論壇（TSRS）由國立臺灣科學教育館與教育部特殊教育資優類中央輔導團聯合主辦，致力推動資優學生學術研究交流與成長。
+      </p>
+    </div>
+    <div class="footer-links">
+      <h5>快速連結</h5>
+      <a href="#about">關於論壇</a>
+      <a href="#highlights">論壇亮點</a>
+      <a href="#schedule">活動時程</a>
+      <a href="#speakers">與會專家</a>
+      <a href="#venue">場地資訊</a>
+      <a href="#register">立即報名</a>
+    </div>
+  </div>
+  <div class="footer-copy">
+    <span>© 2026 台灣學生傑出研究發表論壇 TSRS. All rights reserved.</span>
+    <span>國立臺灣科學教育館 × 教育部特資優類央團</span>
+  </div>
+</footer>
+
+<!-- Tweaks Panel -->
+<div id="tweaks-panel">
+  <div class="tweaks-header">
+    <h6>Tweaks</h6>
+    <button class="tweaks-close" onclick="closeTweaks()">×</button>
+  </div>
+  <div class="tweaks-body">
+    <div class="tweak-row">
+      <span class="tweak-label">Hero 背景風格</span>
+      <div class="tweak-options">
+        <button class="tweak-opt active" onclick="setHeroBg('dark', this)">深藍</button>
+        <button class="tweak-opt" onclick="setHeroBg('navy', this)">靛藍</button>
+        <button class="tweak-opt" onclick="setHeroBg('charcoal', this)">深灰</button>
+      </div>
+    </div>
+    <div class="tweak-row">
+      <span class="tweak-label">報名按鈕顏色</span>
+      <div class="tweak-options">
+        <button class="tweak-opt active" onclick="setCtaColor('gold', this)">金色</button>
+        <button class="tweak-opt" onclick="setCtaColor('blue', this)">藍色</button>
+        <button class="tweak-opt" onclick="setCtaColor('red', this)">紅色</button>
+      </div>
+    </div>
+    <div class="tweak-row">
+      <span class="tweak-label">版面密度</span>
+      <div class="tweak-options">
+        <button class="tweak-opt" onclick="setDensity('compact', this)">緊湊</button>
+        <button class="tweak-opt active" onclick="setDensity('normal', this)">標準</button>
+        <button class="tweak-opt" onclick="setDensity('spacious', this)">寬鬆</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Nav scroll ───────────────────────────────────
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── Schedule tabs ────────────────────────────────
+function switchDay(day, btn) {
+  document.querySelectorAll('.schedule-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sched-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(day).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Intersection observer for fade-ins ────────────
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// ── Tweaks protocol ───────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "heroBg": "dark",
+  "ctaColor": "gold",
+  "density": "normal"
+}/*EDITMODE-END*/;
+
+let tweaks = { ...TWEAK_DEFAULTS };
+
+window.addEventListener('message', e => {
+  if (e.data?.type === '__activate_edit_mode') openTweaks();
+  if (e.data?.type === '__deactivate_edit_mode') closeTweaks();
+});
+window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+function openTweaks() { document.getElementById('tweaks-panel').classList.add('open'); }
+function closeTweaks() {
+  document.getElementById('tweaks-panel').classList.remove('open');
+  window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+}
+
+function activateOpts(parent, btn) {
+  parent.querySelectorAll('.tweak-opt').forEach(o => o.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setHeroBg(val, btn) {
+  activateOpts(btn.closest('.tweak-options'), btn);
+  const bgs = {
+    dark: 'var(--blue-800)',
+    navy: '#0d1b3e',
+    charcoal: 'var(--charcoal-700)'
+  };
+  document.querySelector('.hero').style.background = bgs[val];
+  tweaks.heroBg = val;
+  persist();
+}
+function setCtaColor(val, btn) {
+  activateOpts(btn.closest('.tweak-options'), btn);
+  const cols = {
+    gold: ['var(--gold-400)', 'var(--charcoal-800)'],
+    blue: ['var(--blue-400)', '#fff'],
+    red:  ['var(--red-500)', '#fff']
+  };
+  document.querySelectorAll('.btn-hero-primary').forEach(b => {
+    b.style.background = cols[val][0];
+    b.style.color = cols[val][1];
+  });
+  document.querySelector('.nav-cta').style.background = cols[val][0];
+  tweaks.ctaColor = val;
+  persist();
+}
+function setDensity(val, btn) {
+  activateOpts(btn.closest('.tweak-options'), btn);
+  const pads = { compact: '64px 24px', normal: '96px 24px', spacious: '128px 24px' };
+  document.querySelectorAll('.section').forEach(s => s.style.padding = pads[val]);
+  tweaks.density = val;
+  persist();
+}
+function persist() {
+  window.parent.postMessage({ type: '__edit_mode_set_keys', edits: tweaks }, '*');
+}
+</script>
+
+</body>
+</html>
