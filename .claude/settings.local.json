@@ -45,7 +45,8 @@
       "Read(//tmp/**)",
       "Bash(cp \"/tmp/speaker_郭文瑞_large.jpg\" \"D:/Git/2026TSRS/images/speaker_郭文瑞.jpg\")",
       "Bash(curl -s -L -A 'Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36' --max-time 20 'https://www.math.tku.edu.tw/math/?page_id=554')",
-      "WebFetch(domain:teacher.tku.edu.tw)"
+      "WebFetch(domain:teacher.tku.edu.tw)",
+      "Bash(git -C \"D:\\\\GitHub\\\\TSRS-prototype\" show 45ffa60 --stat)"
     ]
   }
 }
