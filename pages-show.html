@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>手冊裝訂翻頁展示</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #171717;
+      --muted: #5c6570;
+      --line: #d7dce2;
+      --paper: #fffdf8;
+      --surface: #f6f7f9;
+      --panel: #ffffff;
+      --accent: #0e766e;
+      --accent-2: #7c3aed;
+      --shadow: 0 24px 60px rgba(20, 28, 38, 0.16);
+      --page-w: min(24vw, 300px);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #f6f7f9 0%, #eef4f2 52%, #f4f0fa 100%);
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 24px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 18px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 850;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button {
+      border: 1px solid #c8d0d8;
+      background: #fff;
+      color: var(--ink);
+      height: 38px;
+      padding: 0 14px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(20, 28, 38, 0.07);
+    }
+
+    button.primary {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    .toolbar .step-controls {
+      display: none;
+    }
+
+    button:focus-visible {
+      outline: 3px solid rgba(14, 118, 110, 0.35);
+      outline-offset: 2px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .demo {
+      min-width: 0;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(215, 220, 226, 0.9);
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 14px;
+      box-shadow: 0 12px 36px rgba(20, 28, 38, 0.08);
+    }
+
+    .demo-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .mode-note {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .step-badge {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 7px 10px;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 760px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(23, 23, 23, 0.055) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(23, 23, 23, 0.045) 1px, transparent 1px),
+        #e8edf1;
+      background-size: 24px 24px;
+      perspective: 1800px;
+    }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      inset: auto 10% 7% 10%;
+      height: 26px;
+      background: radial-gradient(ellipse at center, rgba(20, 28, 38, 0.24), transparent 68%);
+      pointer-events: none;
+    }
+
+    .sheet {
+      position: absolute;
+      background: var(--paper);
+      border: 1px solid #cfd5dc;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .sheet.blank {
+      display: grid;
+      place-items: center;
+      color: #9aa3ad;
+      font-size: 22px;
+      font-weight: 850;
+      background:
+        linear-gradient(135deg, rgba(14, 118, 110, 0.08), rgba(124, 58, 237, 0.08)),
+        var(--paper);
+    }
+
+    .page-face.blank {
+      display: grid;
+      place-items: center;
+      color: #9aa3ad;
+      font-size: 22px;
+      font-weight: 850;
+      background:
+        linear-gradient(135deg, rgba(14, 118, 110, 0.08), rgba(124, 58, 237, 0.08)),
+        var(--paper);
+    }
+
+    .sheet img,
+    .page-face img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #fff;
+    }
+
+    .top-book {
+      position: relative;
+      width: var(--page-w);
+      aspect-ratio: 297 / 420;
+      transform: rotateX(7deg);
+      transform-style: preserve-3d;
+    }
+
+    .top-book .sheet {
+      inset: 0;
+      transform-origin: top center;
+      transition: transform 780ms cubic-bezier(.2, .72, .2, 1), opacity 360ms ease;
+    }
+
+    .top-book .sheet.flipped {
+      transform: rotateX(176deg);
+      opacity: 0.18;
+    }
+
+    .top-hinge {
+      position: absolute;
+      left: -12px;
+      right: -12px;
+      top: -16px;
+      height: 16px;
+      background: repeating-linear-gradient(90deg, #1d232a 0 14px, #555f69 14px 18px);
+      box-shadow: 0 6px 18px rgba(20, 28, 38, 0.25);
+      z-index: 8;
+    }
+
+    .spread-book {
+      position: relative;
+      width: calc(var(--page-w) * 2);
+      aspect-ratio: 594 / 420;
+      transform-style: preserve-3d;
+    }
+
+    .cover,
+    .spread {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      transform-style: preserve-3d;
+    }
+
+    .cover {
+      position: relative;
+      inset: auto;
+      width: var(--page-w);
+      height: 100%;
+      z-index: 4;
+      display: block;
+      left: 50%;
+      transition: transform 900ms cubic-bezier(.2, .72, .2, 1), opacity 300ms ease;
+      transform-origin: left center;
+      transform: translateX(-50%);
+    }
+
+    .cover .page-face {
+      width: 100%;
+      height: 100%;
+    }
+
+    .spread {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .spread-book.is-open .cover {
+      transform: translateX(-50%) rotateY(-178deg);
+      opacity: 0.14;
+      pointer-events: none;
+    }
+
+    .spread {
+      z-index: 1;
+      opacity: 0;
+      transform: translateX(18px) rotateY(8deg);
+      transition: opacity 360ms ease, transform 720ms cubic-bezier(.2, .72, .2, 1);
+    }
+
+    .spread.active {
+      z-index: 3;
+      opacity: 1;
+      transform: translateX(0) rotateY(0deg);
+    }
+
+    .page-face {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid #cfd5dc;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page-face.left {
+      border-right: 0;
+    }
+
+    .page-face.right {
+      border-left: 0;
+    }
+
+    .spine {
+      position: absolute;
+      top: -8px;
+      bottom: -8px;
+      left: calc(50% - 3px);
+      width: 6px;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.28), rgba(255, 255, 255, 0.55), rgba(0, 0, 0, 0.2));
+      z-index: 7;
+      pointer-events: none;
+    }
+
+    .spread-book:not(.is-open) .spine {
+      opacity: 0;
+    }
+
+    .caption {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .local-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .local-controls button {
+      width: 100%;
+      height: 42px;
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    .dot {
+      width: 28px;
+      height: 6px;
+      border: 0;
+      background: #c3cad1;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .dot.active.single {
+      background: var(--accent);
+    }
+
+    .dot.active.spread-dot {
+      background: var(--accent-2);
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        padding: 16px;
+      }
+
+      header,
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        align-items: start;
+        display: grid;
+      }
+
+      .toolbar {
+        justify-content: start;
+      }
+
+      .stage {
+        min-height: 700px;
+      }
+
+      :root {
+        --page-w: min(44vw, 300px);
+      }
+    }
+
+    @media (max-width: 560px) {
+      h1 {
+        font-size: 22px;
+      }
+
+      .stage {
+        min-height: 560px;
+      }
+
+      .demo {
+        padding: 12px;
+      }
+
+      .demo-head {
+        display: grid;
+      }
+
+      :root {
+        --page-w: min(76vw, 250px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>手冊裝訂翻頁展示</h1>
+        <p class="subtitle">同一份封面與 P1-P6，以兩種印製與裝訂方式比較翻閱動線。</p>
+      </div>
+      <div class="toolbar" aria-label="播放控制">
+        <button class="primary" id="playBtn" type="button">播放</button>
+        <span class="step-controls">
+          <button id="prevBtn" type="button">上一步</button>
+          <button id="nextBtn" type="button">下一步</button>
+        </span>
+        <button id="resetBtn" type="button">重播</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="demo" aria-labelledby="single-title">
+        <div class="demo-head">
+          <div>
+            <h2 id="single-title">單面印刷，上方翻頁</h2>
+            <p class="mode-note">先看到封面，從上緣翻起後依序露出 P1-P6。</p>
+          </div>
+          <div class="step-badge" id="singleBadge">封面</div>
+        </div>
+        <div class="stage">
+          <div class="top-book" id="topBook" data-step="0" aria-live="polite">
+            <div class="top-hinge" aria-hidden="true"></div>
+            <div class="sheet blank">封面</div>
+            <div class="sheet"><img src="pdf_preview_pages/preview-page-1.jpg" alt="P1"></div>
+            <div class="sheet"><img src="pdf_preview_pages/preview-page-2.jpg" alt="P2"></div>
+            <div class="sheet"><img src="pdf_preview_pages/preview-page-3.jpg" alt="P3"></div>
+            <div class="sheet"><img src="pdf_preview_pages/preview-page-4.jpg" alt="P4"></div>
+            <div class="sheet"><img src="pdf_preview_pages/preview-page-5.jpg" alt="P5"></div>
+            <div class="sheet"><img src="pdf_preview_pages/preview-page-6.jpg" alt="P6"></div>
+          </div>
+        </div>
+        <div class="caption">
+          <span id="singleText">目前看到封面。</span>
+          <div class="dots" aria-hidden="true">
+            <span class="dot single active"></span>
+            <span class="dot single"></span>
+            <span class="dot single"></span>
+            <span class="dot single"></span>
+            <span class="dot single"></span>
+            <span class="dot single"></span>
+            <span class="dot single"></span>
+          </div>
+        </div>
+        <div class="local-controls" aria-label="上方翻頁控制">
+          <button data-action="prev" type="button" aria-label="上方往回翻">↓</button>
+          <button data-action="next" type="button" aria-label="上方往後翻">↑</button>
+        </div>
+      </section>
+
+      <section class="demo" aria-labelledby="spread-title">
+        <div class="demo-head">
+          <div>
+            <h2 id="spread-title">左翻，第一面空白</h2>
+            <p class="mode-note">先看到單頁封面，左翻後依序顯示指定跨頁。</p>
+          </div>
+          <div class="step-badge" id="spreadBadge">封面</div>
+        </div>
+        <div class="stage">
+          <div class="spread-book" id="spreadBook" data-step="0" aria-live="polite">
+            <div class="cover">
+              <div class="page-face blank">封面</div>
+            </div>
+            <div class="spread" data-spread="one">
+              <div class="page-face left"><img src="pdf_preview_pages/preview-page-1.jpg" alt="P1"></div>
+              <div class="page-face right"><img src="pdf_preview_pages/preview-page-2.jpg" alt="P2"></div>
+            </div>
+            <div class="spread" data-spread="two">
+              <div class="page-face left"><img src="pdf_preview_pages/preview-page-3.jpg" alt="P3"></div>
+              <div class="page-face right blank">續頁空白</div>
+            </div>
+            <div class="spread" data-spread="three">
+              <div class="page-face left"><img src="pdf_preview_pages/preview-page-4.jpg" alt="P4"></div>
+              <div class="page-face right"><img src="pdf_preview_pages/preview-page-5.jpg" alt="P5"></div>
+            </div>
+            <div class="spread" data-spread="four">
+              <div class="page-face left"><img src="pdf_preview_pages/preview-page-6.jpg" alt="P6"></div>
+              <div class="page-face right blank">續頁空白</div>
+            </div>
+            <div class="spine" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="caption">
+          <span id="spreadText">目前看到封面。</span>
+          <div class="dots" aria-hidden="true">
+            <span class="dot spread-dot active"></span>
+            <span class="dot spread-dot"></span>
+            <span class="dot spread-dot"></span>
+            <span class="dot spread-dot"></span>
+            <span class="dot spread-dot"></span>
+          </div>
+        </div>
+        <div class="local-controls" aria-label="左翻控制">
+          <button data-action="prev" type="button" aria-label="左翻往回">←</button>
+          <button data-action="next" type="button" aria-label="左翻往後">→</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const state = {
+      singleStep: 0,
+      spreadStep: 0,
+      timer: null,
+      playing: false
+    };
+
+    const topBook = document.getElementById("topBook");
+    const spreadBook = document.getElementById("spreadBook");
+    const singleBadge = document.getElementById("singleBadge");
+    const spreadBadge = document.getElementById("spreadBadge");
+    const singleText = document.getElementById("singleText");
+    const spreadText = document.getElementById("spreadText");
+    const playBtn = document.getElementById("playBtn");
+
+    const topSheets = [...topBook.querySelectorAll(".sheet")];
+    const spreads = [...spreadBook.querySelectorAll(".spread")];
+    const singleLabels = ["封面", "P1", "P2", "P3", "P4", "P5", "P6"];
+    const singleCopy = [
+      "目前看到封面。",
+      "第一次上翻後露出 P1。",
+      "第二次上翻後露出 P2。",
+      "第三次上翻後露出 P3。",
+      "第四次上翻後露出 P4。",
+      "第五次上翻後露出 P5。",
+      "第六次上翻後露出 P6。"
+    ];
+    const spreadStates = [
+      { label: "封面", text: "目前看到封面。", spread: -1 },
+      { label: "P1 / P2", text: "第一次左翻後，左頁 P1、右頁 P2 並陳。", spread: 0 },
+      { label: "P3 / 空白", text: "第二次左翻後，左頁 P3、右頁空白。", spread: 1 },
+      { label: "P4 / P5", text: "第三次左翻後，左頁 P4、右頁 P5 並陳。", spread: 2 },
+      { label: "P6 / 空白", text: "第四次左翻後，左頁 P6、右頁空白。", spread: 3 }
+    ];
+
+    function setActiveDots(selector, index) {
+      document.querySelectorAll(selector).forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === index);
+      });
+    }
+
+    function render() {
+      topBook.dataset.step = String(state.singleStep);
+      spreadBook.dataset.step = String(state.spreadStep);
+      singleBadge.textContent = singleLabels[state.singleStep];
+      spreadBadge.textContent = spreadStates[state.spreadStep].label;
+      singleText.textContent = singleCopy[state.singleStep];
+      spreadText.textContent = spreadStates[state.spreadStep].text;
+      topSheets.forEach((sheet, index) => {
+        sheet.classList.toggle("flipped", index < state.singleStep);
+        sheet.style.zIndex = String(topSheets.length - index);
+      });
+      spreadBook.classList.toggle("is-open", spreadStates[state.spreadStep].spread >= 0);
+      spreads.forEach((spread, index) => {
+        spread.classList.toggle("active", index === spreadStates[state.spreadStep].spread);
+      });
+      setActiveDots(".dot.single", state.singleStep);
+      setActiveDots(".dot.spread-dot", state.spreadStep);
+    }
+
+    function stop() {
+      state.playing = false;
+      window.clearInterval(state.timer);
+      state.timer = null;
+      playBtn.textContent = "播放";
+    }
+
+    function next() {
+      state.singleStep = state.singleStep >= singleLabels.length - 1 ? 0 : state.singleStep + 1;
+      state.spreadStep = state.spreadStep >= spreadStates.length - 1 ? 0 : state.spreadStep + 1;
+      render();
+    }
+
+    function prev() {
+      state.singleStep = state.singleStep <= 0 ? singleLabels.length - 1 : state.singleStep - 1;
+      state.spreadStep = state.spreadStep <= 0 ? spreadStates.length - 1 : state.spreadStep - 1;
+      render();
+    }
+
+    function nextSingle() {
+      state.singleStep = state.singleStep >= singleLabels.length - 1 ? 0 : state.singleStep + 1;
+      render();
+    }
+
+    function prevSingle() {
+      state.singleStep = state.singleStep <= 0 ? singleLabels.length - 1 : state.singleStep - 1;
+      render();
+    }
+
+    function nextSpread() {
+      state.spreadStep = state.spreadStep >= spreadStates.length - 1 ? 0 : state.spreadStep + 1;
+      render();
+    }
+
+    function prevSpread() {
+      state.spreadStep = state.spreadStep <= 0 ? spreadStates.length - 1 : state.spreadStep - 1;
+      render();
+    }
+
+    document.querySelectorAll('[aria-label="上方往後翻"]').forEach((button) => {
+      button.addEventListener("click", () => {
+        stop();
+        nextSingle();
+      });
+    });
+
+    document.querySelectorAll('[aria-label="上方往回翻"]').forEach((button) => {
+      button.addEventListener("click", () => {
+        stop();
+        prevSingle();
+      });
+    });
+
+    document.querySelectorAll('[aria-label="左翻往後"]').forEach((button) => {
+      button.addEventListener("click", () => {
+        stop();
+        nextSpread();
+      });
+    });
+
+    document.querySelectorAll('[aria-label="左翻往回"]').forEach((button) => {
+      button.addEventListener("click", () => {
+        stop();
+        prevSpread();
+      });
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      stop();
+      state.singleStep = 0;
+      state.spreadStep = 0;
+      render();
+    });
+
+    playBtn.addEventListener("click", () => {
+      if (state.playing) {
+        stop();
+        return;
+      }
+
+      state.playing = true;
+      playBtn.textContent = "暫停";
+      next();
+      state.timer = window.setInterval(next, 1800);
+    });
+
+    render();
+  </script>
+</body>
+</html>
