@@ -361,20 +361,16 @@
       color: #fff;
     }
 
-    .btn-hero-live {
-      background: var(--red-500);
-      border-color: var(--red-500);
-      color: #fff;
-      box-shadow: 0 10px 28px rgba(239, 83, 80, 0.4);
-      font-weight: 900;
-    }
-
-    .btn-hero-live:hover {
-      background: #ff6b68;
-      border-color: #ff6b68;
-      box-shadow: 0 12px 32px rgba(239, 83, 80, 0.5);
-      color: #fff;
-      transform: translateY(-1px);
+    .btn-hero-primary.disabled,
+    .nav-cta.disabled,
+    .btn.disabled {
+      background: var(--charcoal-300) !important;
+      color: var(--charcoal-100) !important;
+      border-color: var(--charcoal-300) !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+      box-shadow: none !important;
+      transform: none !important;
     }
 
     .live-label {
@@ -389,15 +385,6 @@
       letter-spacing: 0.08em;
     }
 
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
-      animation: livePulse 1.4s ease-out infinite;
-    }
-
     .live-card-actions {
       display: flex;
       flex-wrap: wrap;
@@ -405,29 +392,45 @@
       margin-top: 16px;
     }
 
-    .live-card-btn {
+    .replay-card-btn {
       display: inline-flex;
       align-items: center;
       gap: 7px;
       padding: 10px 14px;
       border-radius: 4px;
-      background: var(--red-500);
       color: #fff;
       font-family: var(--font-primary);
       font-size: 13px;
       font-weight: 900;
       letter-spacing: 0.06em;
       text-decoration: none;
-      box-shadow: 0 8px 20px rgba(239, 83, 80, 0.28);
       transition: background 150ms, box-shadow 150ms, transform 150ms;
     }
 
-    .live-card-btn:hover {
-      background: #ff6b68;
+    .replay-card-btn:hover {
       color: #fff;
       text-decoration: none;
-      box-shadow: 0 10px 24px rgba(239, 83, 80, 0.36);
       transform: translateY(-1px);
+    }
+
+    .replay-card-btn-a {
+      background: var(--blue-400);
+      box-shadow: 0 8px 20px rgba(82, 157, 214, 0.28);
+    }
+
+    .replay-card-btn-a:hover {
+      background: var(--blue-500);
+      box-shadow: 0 10px 24px rgba(82, 157, 214, 0.36);
+    }
+
+    .replay-card-btn-b {
+      background: var(--teal-400);
+      box-shadow: 0 8px 20px rgba(93, 174, 153, 0.28);
+    }
+
+    .replay-card-btn-b:hover {
+      background: var(--teal-500);
+      box-shadow: 0 10px 24px rgba(93, 174, 153, 0.36);
     }
 
     .hero-scroll {
@@ -1190,17 +1193,6 @@
       }
     }
 
-    @keyframes livePulse {
-
-      0%,
-      100% {
-        box-shadow: 0 0 0 0 rgba(204, 0, 0, 0.4);
-      }
-
-      50% {
-        box-shadow: 0 0 0 10px rgba(204, 0, 0, 0);
-      }
-    }
 
     @keyframes dot {
 
@@ -1336,7 +1328,7 @@
         <li><a href="#speakers">與會專家</a></li>
         <li><a href="#teams">展演團隊</a></li>
         <li><a href="#venue">場地資訊</a></li>
-        <li><a href="https://forms.gle/RCb1RzGVUsZijZfK7" target="_blank" class="nav-cta">立即報名研習</a></li>
+        <li><a class="nav-cta disabled">報名已截止</a></li>
       </ul>
     </div>
   </nav>
@@ -1384,14 +1376,14 @@
       </div>
 
       <div class="hero-btns">
-        <a href="https://forms.gle/RCb1RzGVUsZijZfK7" target="_blank" class="btn-hero-primary">立即報名研習</a>
+        <a class="btn-hero-primary disabled">報名已截止</a>
         <a href="docs/2026 臺灣學生傑出科學研究發表暨專家指導交流論壇-實施計畫.pdf" target="_blank" class="btn-hero-outline">實施計畫</a>
 
         <a href="https://youtube.com/live/fY9iWCx094o?feature=share" target="_blank" rel="noopener"
-          class="btn-hero-outline btn-hero-live"><span class="live-label"><span class="live-dot"></span>LIVE</span>A
+          class="btn-hero-outline"><span class="live-label">回放直播</span>A
           場｜數理應用組</a>
         <a href="https://youtube.com/live/5WV7B1fznGA?feature=share" target="_blank" rel="noopener"
-          class="btn-hero-outline btn-hero-live"><span class="live-label"><span class="live-dot"></span>LIVE</span>B
+          class="btn-hero-outline"><span class="live-label">回放直播</span>B
           場｜生化環科組</a>
       </div>
     </div>
@@ -1433,8 +1425,8 @@
           <p>科教館每年從台灣國際科展(TISF)中遴選優秀團隊，代表台灣赴美參加 ISEF，是台灣學生科展的最高榮耀</p>
           <p>2026年的 TSRS 延續往年精神，向<b>2026 ISEF代表團</b>邀請傑出學生研究團隊，以海報展示與口頭發表形式，在<b>科教館</b>展現台灣學生的研究能量與創意視野。</p>
           <div style="margin-top:24px;">
-            <a href="https://forms.gle/RCb1RzGVUsZijZfK7" target="_blank" class="btn btn-primary"
-              style="font-family:var(--font-primary);font-size:14px;font-weight:900;padding:12px 28px;border-radius:4px;background:var(--gold-400);color:var(--charcoal-800);display:inline-flex;align-items:center;gap:8px;text-decoration:none;">立即報名研習</a>
+            <a class="btn btn-primary disabled"
+              style="font-family:var(--font-primary);font-size:14px;font-weight:900;padding:12px 28px;border-radius:4px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;">報名已截止</a>
           </div>
         </div>
         <div class="about-stats fade-in">
@@ -1493,10 +1485,10 @@
           <p>透過網路直播，讓優秀學子被看見，給予學生肯定與激勵，也讓研究路上的學生見賢思齊。</p>
           <div class="live-card-actions">
             <a href="https://youtube.com/live/fY9iWCx094o?feature=share" target="_blank" rel="noopener"
-              class="live-card-btn"><span class="live-label"><span class="live-dot"></span>LIVE</span>A 場｜數理應用組
+              class="replay-card-btn replay-card-btn-a"><span class="live-label">回放直播</span>A 場｜數理應用組
             </a>
             <a href="https://youtube.com/live/5WV7B1fznGA?feature=share" target="_blank" rel="noopener"
-              class="live-card-btn"><span class="live-label"><span class="live-dot"></span>LIVE</span>B 場｜生化環科組
+              class="replay-card-btn replay-card-btn-b"><span class="live-label">回放直播</span>B 場｜生化環科組
             </a>
           </div>
         </div>
@@ -1943,7 +1935,7 @@
       <p>名額有限，歡迎研究指導教師踴躍報名，一般民眾與學生可以透過直播觀看互動，與頂尖學生研究團隊交流！</p>
       <div class="cta-deadline">⏰ 活動日期：2026年5月30日（星期六）</div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:16px;justify-content:center;">
-        <a href="https://forms.gle/RCb1RzGVUsZijZfK7" target="_blank" class="btn-hero-primary">立即報名研習</a>
+        <a class="btn-hero-primary disabled">報名已截止</a>
         <a href="docs/2026 臺灣學生傑出科學研究發表暨專家指導交流論壇-實施計畫.pdf" target="_blank" class="btn-hero-outline">實施計畫</a>
       </div>
       <p style="margin-top:28px;font-size:12px;color:rgba(255,255,255,0.35);">如有任何問題，歡迎聯絡主辦單位</p>
